@@ -1,0 +1,7 @@
+1. Start
+2. Define f(x)
+3. Read a,b,n
+4. Calculate h = (b-a)/n
+5. x(i) = x(0) + i*h
+	y(i) = f(x(i))
+6. Sum = (1(1)n) y(i)

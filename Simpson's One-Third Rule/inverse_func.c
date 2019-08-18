@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+double inverse(double x) {
+	return x + (1/x); // 1/(1+x)
+}
+
+double integrate_inverse(double a, double b, int n) {
+	if(n%2 != 0) {
+		printf("Total number of intervals is not even. Simpson's 1/3rd Rule is not applicable.\n\n");
+		return -1;
+	}
+
+	double h = (b-a)/n; // individual interval length
+	
+	double sum = inverse(a) + inverse(b);
+	int i;
+	double even_sum = 0.0, odd_sum = 0.0;
+	
+	for(i = 1; i < n; i++) {
+		if(i%2 == 0) even_sum += inverse(a + i*h);
+		else odd_sum += inverse(a + i*h);
+	}
+	
+	sum += 4*odd_sum + 2*even_sum; // [y(0) + y(n) + 4*{y(1)+y(3)+........} + 2*{y(2)+y(4)+........}]
+	
+	return ((h/3)*sum); // final result
+}
+
+int main() {
+	while(1) {
+		double a, b;
+		int n;
+		printf("Enter the value of lower bound(a): ");
+		scanf("%lf", &a);
+		printf("Enter the value of upper bound(b): ");
+		scanf("%lf", &b);
+		printf("Enter the number of sub-intervals(n)(should be even): ");
+		scanf("%d", &n);
+	
+		double result = integrate_inverse(a, b, n);
+		if(result != -1) {
+			printf("The result of Integration is: %lf\n", result);
+			printf("                              -------------\n");			
+		}
+		
+		char choice;
+		printf("Do you want to continue?(Y/N): ");
+		scanf("\n%c", &choice);
+		if(choice != 'Y' && choice != 'y') break;
+	}
+	return 0;
+}
